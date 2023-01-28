@@ -6,6 +6,24 @@ function User() {
     const [name, setName] = useState("");
     const [shoppingList, setShoppingList] = useState([]);
     
+    //Post Call to Add User
+    async function postUser(url = '', data = {userName}) {
+        // Default options are marked with *
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+      .catch(error => {
+        window.alert(error);
+        return;
+      })
+      return response.json();
+    };
+
+    //Method Call when user clicks Add User button
     function setUser(event){ 
         event.preventDefault();
         setName(userName);
@@ -17,6 +35,24 @@ function User() {
         setUserName("");
        };
     
+    //Retrieve call to fetch User Data
+    async function getData(url = '') {
+      // Default options are marked with *
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+       "Content-Type": "application/json",
+      }
+    })
+    .catch(error => {
+      window.alert(error);
+      return;
+    }
+    )
+    return response.json();
+  };
+
+    //MEthod Call when user clicks retrieve button
     function getUser(event){ 
     event.preventDefault();
     setName(userName);
@@ -24,38 +60,6 @@ function User() {
         .then((data) => {
             setShoppingList(data.shoppingList); // JSON data parsed by `data.json()` call
         });
-    };
-    async function getData(url = '') {
-        // Default options are marked with *
-        const response = await fetch(url, {
-          method: "GET",
-          headers: {
-         "Content-Type": "application/json",
-        }
-      })
-      .catch(error => {
-        window.alert(error);
-        return;
-      }
-      )
-      return response.json();
-    };
-
-
-    async function postUser(url = '', data = {userName}) {
-        // Default options are marked with *
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-         "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-      .catch(error => {
-        window.alert(error);
-        return;
-      })
-      return response.json();
     };
 
     return (

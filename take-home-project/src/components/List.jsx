@@ -14,20 +14,9 @@ function List(props) {
     const userName = props.name;
 
 
-    function handleClick(event){ 
-      event.preventDefault();
-        postData(`http://localhost:8000/${userName}`, { item: listText })
-        .then((data) => {
-          if(data.status === 200) {
-            setShoppingList((oldList) =>{
-              return [...oldList, listText];
-            }
-            )
-          }
-        });
-        setListText("");
-     };
-     async function postData(url = '', data = {}) {
+    // Method When User Clicks Add Item button to add item
+
+    async function postData(url = '', data = {}) {
       // Default options are marked with *
       const response = await fetch(url, {
         method: "POST",
@@ -46,6 +35,22 @@ function List(props) {
     return response.json();
   };
 
+    function handleClick(event){ 
+      event.preventDefault();
+        postData(`http://localhost:8000/${userName}`, { item: listText })
+        .then((data) => {
+          if(data.status === 200) {
+            setShoppingList((oldList) =>{
+              return [...oldList, listText];
+            }
+            )
+          }
+        });
+        setListText("");
+     };
+     
+
+  //When User does Checkbox Changes
   function handleChange(event) {
     let isChecked = false;
     // isChecked = checkedItems.filter((num) => {
@@ -66,10 +71,8 @@ function List(props) {
   }
       
   }
-  
 
-
-
+  //API Call when User Clicks Delete Item
   async function deleteData(url = '') {
     // Default options are marked with *
     const response = await fetch(url, {
@@ -87,7 +90,6 @@ function List(props) {
   )
   return response.json();
 };
-
   function deleteItems(event) {
     event.preventDefault();
     console.log(checkedItems);
